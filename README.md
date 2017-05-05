@@ -82,3 +82,20 @@ that's just a guess.
 
 One last note here: regardless of the IDE used, every submitted project must
 still be compilable with cmake and make./
+
+## PID Parameters
+
+PID controller has three parameters, namely the coefficients for the proportional, integral, and derivative terms.
+
+The proportional term directly depends on the cross track error (CTE). The larger the discrepancy between the set point and the observed path, the larger is the proportional term. Increasing the proportional term will increase the speed of the control system. If the proportional term is set too high, the system will become unstable and may start to oscillate and become unstable.
+
+The integral term sums the cross track error over time. Even a small error term will cause the integral term to increase slowly. As a consequence, the integral term will drive the Steady-state error to zero. The integral term is important if the  control system has a certain offset or bias.
+
+The derivative term is proportional to the change rate of the cross track error. It damps the oscillations and overshooting of the proportional term since it is increasing when the cross track error is reducing strongly which would lead to oscillations.
+
+Typically, the P and D terms of the PID controller are the most important filter parameters. The integral term is oftem less decisive unless the system exhibits a large bias.
+
+## PID Parameter Tuning
+
+The parameter tuning was tackled as a two-stage optimization: At first, an initial parameter set needs to be found that allows the car to drive safely around the track. I started by adjusting mainly the P and D terms until driving was stable. 
+For a more precise tuning the [Twiddle](https://martin-thoma.com/twiddle/) algorithm from Sebastian Thrun was applied. After a short intialization phase the car was driving for about one lap and the squared cross track error was monitored. PID parameters were changed to reduce the squared cross track error. After each Twiddle iteration the simulator was resetted to make the different trials more comparable.

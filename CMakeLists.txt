@@ -7,13 +7,8 @@ add_definitions(-std=c++11)
 set(CXX_FLAGS "-Wall")
 set(CMAKE_CXX_FLAGS, "${CXX_FLAGS}")
 
-add_definitions(-DUSE_ASIO -D_GNU_SOURCE)
-
 set(sources src/PID.cpp src/main.cpp)
 
-include_directories(C:/LegacyApp/Cygwin/usr/include) 
-include_directories(/usr/include/uWS) 
-link_directories(C:/LegacyApp/Cygwin/lib)
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin") 
 
@@ -28,5 +23,4 @@ endif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 
 add_executable(pid ${sources})
 
-#target_link_libraries(pid z ssl uv libuWS)
-target_link_libraries(pid z ssl crypto boost_system libuWS)
+target_link_libraries(pid z ssl uv uWS)
